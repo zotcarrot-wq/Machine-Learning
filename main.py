@@ -5,7 +5,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.ensemble import RandomForestRegressor
-import mathplot
+import matplotlib.pyplot as plt
+import numpy as np
 
 #
 # def print_hi(name):
@@ -78,3 +79,13 @@ rf_results.columns = ['Method','Training MSE','Training R2', 'Test MSE', 'Test R
 df_models = pd.concat([lr_results,rf_results], axis=0).reset_index(drop=True)
 print(df_models)
 
+#Data visualization of prediction results
+plt.figure(figsize=(5,5))
+plt.scatter(x=y_train, y=y_lr_train_pred, c="#7CAE00", alpha=0.3)
+z = np.polyfit(y_train, y_lr_train_pred, 1)
+p = np.poly1d(z)
+
+plt.plot(y_train,p(y_train), '#F8766D')
+plt.ylabel('Predicted logS')
+plt.xlabel('Experimental logS')
+plt.show()
